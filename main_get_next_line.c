@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_get_next_line.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clundber <clundber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: welhox <welhox@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 10:37:37 by clundber          #+#    #+#             */
-/*   Updated: 2023/11/17 15:05:36 by clundber         ###   ########.fr       */
+/*   Updated: 2023/11/23 16:04:12 by welhox           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include "get_next_line.h"
+
 
 int	main(void)
 
@@ -27,17 +28,18 @@ int	main(void)
 	fd = open("file_to_read.txt", O_RDONLY);
 	if (fd == -1)
 		printf("open failed");
-	printf("%d\n", fd);
+	//printf("%d\n", fd);
 	
-	//while (row < 5)
-	//{
-	*ptr = *get_next_line(fd);
+	while (row < 7)
+	{
+	printf("%s", get_next_line(fd));
+	//printf("and now i want the next line :\n");
+	//printf("%s\n", get_next_line(fd));
 
-
-	printf ("%d %s", row, ptr);
+	//printf ("%d %s", row, ptr);
 	row++;
-	free (ptr);
-	//}
+	//free (ptr);
+	}
 	close (fd);
 		if (fd < 0)
 			printf("close failed");
