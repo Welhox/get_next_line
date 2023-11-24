@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_get_next_line.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welhox <welhox@student.42.fr>              +#+  +:+       +#+        */
+/*   By: clundber <clundber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 10:37:37 by clundber          #+#    #+#             */
-/*   Updated: 2023/11/23 16:04:12 by welhox           ###   ########.fr       */
+/*   Updated: 2023/11/24 15:19:57 by clundber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@ int	main(void)
 {
 	int	fd;
 	int	row;
-	char *ptr;
+	//char *ptr;
 
 	row = 0;
-	fd = open("file_to_read.txt", O_RDONLY);
+	fd = open("empty.txt", O_RDONLY);
+	//fd = open("file_to_read.txt", O_RDONLY);
+	//printf ("%d\n", fd);
 	if (fd == -1)
 		printf("open failed");
 	//printf("%d\n", fd);
