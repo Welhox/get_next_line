@@ -6,7 +6,7 @@
 /*   By: clundber <clundber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 10:37:37 by clundber          #+#    #+#             */
-/*   Updated: 2023/11/24 15:19:57 by clundber         ###   ########.fr       */
+/*   Updated: 2023/11/30 13:59:33 by clundber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(void)
 	//char *ptr;
 
 	row = 0;
-	fd = open("empty.txt", O_RDONLY);
+	fd = open("file_to_read.txt", O_RDONLY);
 	//fd = open("file_to_read.txt", O_RDONLY);
 	//printf ("%d\n", fd);
 	if (fd == -1)

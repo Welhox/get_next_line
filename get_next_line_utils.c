@@ -6,7 +6,7 @@
 /*   By: clundber <clundber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:54:17 by clundber          #+#    #+#             */
-/*   Updated: 2023/11/24 14:52:45 by clundber         ###   ########.fr       */
+/*   Updated: 2023/11/30 15:45:41 by clundber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strdup(const char *s)
 
 	i = 0;
 	len = 0;
-	while (s[len])
+	while (s[len] && len < BUFFER_SIZE)
 		len++;
 	dupe = malloc ((len + 1) * sizeof(char));
 	if (!dupe)
@@ -33,6 +33,7 @@ char	*ft_strdup(const char *s)
 		i++;
 		len--;
 	}
+	dupe[i] = '\0';
 	return (dupe);
 }
 
@@ -96,7 +97,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (substr);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2, int rd)
 
 {
 	char	*str;
@@ -107,7 +108,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	j = 0;
 	if (!s1 || !s2)
 		return (0);
-	str = malloc ((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	str = malloc ((ft_strlen(s1) + rd + 1) * sizeof(char));
 	if (!str)
 		return (0);
 	while (s1[i])
@@ -115,10 +116,10 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		str[i] = s1[i];
 		i++;
 	}
-	while (s2[j])
+	while (s2[j] && j < rd)
 		str[i++] = s2[j++];
 	str[i] = '\0';
-	free ((void*)s1); //extra
+	//free ((void*)s1); //extra
 	//free ((void*)s2);
 	return (str);
 }
