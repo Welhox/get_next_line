@@ -6,7 +6,7 @@
 /*   By: clundber <clundber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:54:17 by clundber          #+#    #+#             */
-/*   Updated: 2023/11/30 15:45:41 by clundber         ###   ########.fr       */
+/*   Updated: 2023/12/01 12:23:27 by clundber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,11 @@ char	*ft_strdup(const char *s)
 		len++;
 	dupe = malloc ((len + 1) * sizeof(char));
 	if (!dupe)
+	{
+		//free (dupe);
 		return (0);
-	while (len >= 0)
+	}
+	while (len > 0)
 	{
 		dupe[i] = s[i];
 		i++;
@@ -119,7 +122,7 @@ char	*ft_strjoin(char const *s1, char const *s2, int rd)
 	while (s2[j] && j < rd)
 		str[i++] = s2[j++];
 	str[i] = '\0';
-	//free ((void*)s1); //extra
+	//free (s1);
 	//free ((void*)s2);
 	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: clundber <clundber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:47:43 by clundber          #+#    #+#             */
-/*   Updated: 2023/11/30 16:13:09 by clundber         ###   ########.fr       */
+/*   Updated: 2023/12/01 14:27:26 by clundber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,27 @@ int	linecheck(char *str)
 	return (0);
 }
 
-char	*ft_reader(char *buffer, char *temp, int fd, int rd)
+char	*ft_reader(char *buffer, char *temp, int fd, int rd, char *ptr)
 {
 	while (rd > 0)
 	{
 		rd = read(fd, buffer, BUFFER_SIZE);
-	//	if (rd <= 0 && !temp)
-	//	{
-	//		free(buffer);
-	//		return (0);
-	//	}
+		if (rd < 0)
+		{	
+			free (buffer); //unessisary freeing occurs at the moment	
+			return (0);
+		}
 		if (temp && buffer[0])
 		{	
+			ptr = temp;
 			temp = ft_strjoin(temp, buffer, rd);
+			free (ptr);
 		}
-		else if (buffer[0])
+		else if (buffer[0] && !temp)
+		{
+			//free (temp); //test
 			temp = ft_strdup(buffer);
+		}
 		if (linecheck(temp) == 1)
 		{
 			free (buffer);
@@ -75,8 +80,9 @@ char	*get_next_line(int fd)
 	int				rd;
 	static char		*temp;
 	int				i;
-
-	//temp = 0;
+	char			*ptr;
+	
+	ptr = NULL;
 	row = NULL;
 	i = 0;
 	rd = 1;
@@ -87,7 +93,7 @@ char	*get_next_line(int fd)
 		return(0);
 	//printf("1\n");
 	if (linecheck(temp) == 0)
-		temp = ft_reader(buffer, temp, fd, rd);
+		temp = ft_reader(buffer, temp, fd, rd, ptr);
 	else
 		free(buffer);
 	if (temp == 0)
@@ -100,15 +106,15 @@ char	*get_next_line(int fd)
 		if(temp[i] == '\n')
 		{	
 			row = ft_substr(temp, 0, i+1);
+			ptr = temp;
 			temp = ft_substr(temp, i+1, (ft_strlen(temp) - i));
-			//free(buffer);
+			free (ptr);
 			return (row);
 		}
 		else if (temp[i+1] == '\0') //&& !buffer[0])
 		{	
 			row = ft_substr(temp, 0, i+1);
 			temp[0] = '\0';
-			//free(buffer);
 			free(temp);
 			return(row);
 		}
@@ -118,7 +124,6 @@ char	*get_next_line(int fd)
 	//row = ft_substr(temp, 0, i+1);
 	//temp = ft_substr(temp, i+1, (ft_strlen(temp) - i));
 	//printf("2\n");
-	//free(buffer);
 	//if (!row)
 	//	row = ft_strdup("");
 
