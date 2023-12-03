@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clundber <clundber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: welhox <welhox@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:54:17 by clundber          #+#    #+#             */
-/*   Updated: 2023/12/01 12:23:27 by clundber         ###   ########.fr       */
+/*   Updated: 2023/12/03 21:50:45 by welhox           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,11 @@ char	*ft_strdup(const char *s)
 
 	i = 0;
 	len = 0;
-	while (s[len] && len < BUFFER_SIZE)
+	while (s[len])// && len < BUFFER_SIZE)
 		len++;
 	dupe = malloc ((len + 1) * sizeof(char));
 	if (!dupe)
 	{
-		//free (dupe);
 		return (0);
 	}
 	while (len > 0)
@@ -40,7 +39,7 @@ char	*ft_strdup(const char *s)
 	return (dupe);
 }
 
-void	*ft_calloc(size_t nmemb, size_t size)
+/*  void	*ft_calloc(size_t nmemb, size_t size)
 
 {
 	void	*ptr;
@@ -59,9 +58,9 @@ void	*ft_calloc(size_t nmemb, size_t size)
 		return (0);
 	ft_bzero(ptr, (nmemb * size));
 	return (ptr);
-}
+} 
 
-void	ft_bzero(void *str, size_t n)
+ void	ft_bzero(void *str, size_t n)
 
 {
 	unsigned char	*ptr;
@@ -73,7 +72,7 @@ void	ft_bzero(void *str, size_t n)
 		ptr++;
 		n--;
 	}
-}
+}  */
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 
@@ -100,7 +99,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (substr);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2, int rd)
+char	*ft_strjoin(char const *s1, char const *s2)
 
 {
 	char	*str;
@@ -111,7 +110,7 @@ char	*ft_strjoin(char const *s1, char const *s2, int rd)
 	j = 0;
 	if (!s1 || !s2)
 		return (0);
-	str = malloc ((ft_strlen(s1) + rd + 1) * sizeof(char));
+	str = malloc ((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!str)
 		return (0);
 	while (s1[i])
@@ -119,10 +118,8 @@ char	*ft_strjoin(char const *s1, char const *s2, int rd)
 		str[i] = s1[i];
 		i++;
 	}
-	while (s2[j] && j < rd)
+	while (s2[j])
 		str[i++] = s2[j++];
 	str[i] = '\0';
-	//free (s1);
-	//free ((void*)s2);
 	return (str);
 }

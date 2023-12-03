@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clundber <clundber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: welhox <welhox@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:47:43 by clundber          #+#    #+#             */
-/*   Updated: 2023/12/01 14:27:26 by clundber         ###   ########.fr       */
+/*   Updated: 2023/12/03 21:50:43 by welhox           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,31 @@ char	*ft_reader(char *buffer, char *temp, int fd, int rd, char *ptr)
 {
 	while (rd > 0)
 	{
+		//buffer = ft_calloc(BUFFER_SIZE + 1, 1);
+		buffer = malloc(BUFFER_SIZE + 1);
+		if (!buffer)
+			return(0);
 		rd = read(fd, buffer, BUFFER_SIZE);
+		
 		if (rd < 0)
 		{	
-			free (buffer); //unessisary freeing occurs at the moment	
+			free (buffer);
 			return (0);
 		}
+		buffer[rd] = '\0';
+		if (rd == 0 && !temp)
+		{
+			free (buffer);
+			return (0);
+		}		
 		if (temp && buffer[0])
 		{	
 			ptr = temp;
-			temp = ft_strjoin(temp, buffer, rd);
+			temp = ft_strjoin(temp, buffer);
 			free (ptr);
 		}
 		else if (buffer[0] && !temp)
 		{
-			//free (temp); //test
 			temp = ft_strdup(buffer);
 		}
 		if (linecheck(temp) == 1)
@@ -66,9 +76,18 @@ char	*ft_reader(char *buffer, char *temp, int fd, int rd, char *ptr)
 			free (buffer);
 			return (temp);
 		}
+		if (temp && buffer[0] == '\0')
+		{
+			free (buffer);
+			return (temp);
+		}
+		else
+			free (buffer);		
 	}
-	free(buffer);
-	return (temp);
+	return (0);
+	//if (!temp)
+	//	return (0);
+	//return (temp);
 
 }
 
@@ -84,20 +103,22 @@ char	*get_next_line(int fd)
 	
 	ptr = NULL;
 	row = NULL;
+	buffer = NULL;
 	i = 0;
 	rd = 1;
 	if (!fd || fd <= 2/*ehka 0*/ || fd >= 256 || BUFFER_SIZE <= 0)
 		return(0);
-	buffer = ft_calloc(BUFFER_SIZE, 1);
-	if (!buffer)
-		return(0);
+	//buffer = ft_calloc(BUFFER_SIZE, 1);
+	//if (!buffer)
+	//	return(0);
 	//printf("1\n");
+
 	if (linecheck(temp) == 0)
 		temp = ft_reader(buffer, temp, fd, rd, ptr);
-	else
-		free(buffer);
-	if (temp == 0)
-		return (0);
+	//else
+	//	free(buffer);
+	//if (!temp)
+	//	return (0);
 	//printf("2\n");
 	//printf("temp = %s\n", temp);
 
@@ -113,7 +134,8 @@ char	*get_next_line(int fd)
 		}
 		else if (temp[i+1] == '\0') //&& !buffer[0])
 		{	
-			row = ft_substr(temp, 0, i+1);
+			//row = ft_substr(temp, 0, i+1);
+			row = ft_strdup(temp);
 			temp[0] = '\0';
 			free(temp);
 			return(row);
