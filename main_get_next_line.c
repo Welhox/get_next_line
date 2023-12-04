@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_get_next_line.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welhox <welhox@student.42.fr>              +#+  +:+       +#+        */
+/*   By: clundber <clundber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 10:37:37 by clundber          #+#    #+#             */
-/*   Updated: 2023/12/03 18:12:47 by welhox           ###   ########.fr       */
+/*   Updated: 2023/12/04 14:24:46 by clundber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(void)
 	//char *ptr;
 
 	row = 0;
-	fd = open("empty.txt", O_RDONLY);
+	fd = open("file_to_read.txt", O_RDONLY);
 	//fd = open("file_to_read.txt", O_RDONLY);
 	//printf ("%d\n", fd);
 	if (fd == -1)

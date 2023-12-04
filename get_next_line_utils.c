@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welhox <welhox@student.42.fr>              +#+  +:+       +#+        */
+/*   By: clundber <clundber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:54:17 by clundber          #+#    #+#             */
-/*   Updated: 2023/12/03 21:50:45 by welhox           ###   ########.fr       */
+/*   Updated: 2023/12/04 11:26:15 by clundber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strdup(const char *s)
 
 	i = 0;
 	len = 0;
-	while (s[len])// && len < BUFFER_SIZE)
+	while (s[len])
 		len++;
 	dupe = malloc ((len + 1) * sizeof(char));
 	if (!dupe)

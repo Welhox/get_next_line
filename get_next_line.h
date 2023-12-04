@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welhox <welhox@student.42.fr>              +#+  +:+       +#+        */
+/*   By: clundber <clundber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:55:28 by clundber          #+#    #+#             */
-/*   Updated: 2023/12/02 16:10:15 by welhox           ###   ########.fr       */
+/*   Updated: 2023/12/04 14:30:58 by clundber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ void	*ft_calloc(size_t nmemb, size_t size);
 void	ft_bzero(void *str, size_t n);
 char	*get_next_line(int fd);
 int		linecheck(char *str);
-char	*ft_reader(char *buffer, char *temp, int fd, int rd, char *ptr);
-
+char	*ft_reader(char *temp, int fd);
+char 	*ft_rowmaker(char **temp, char *row);
 #endif
