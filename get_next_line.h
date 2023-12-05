@@ -6,7 +6,7 @@
 /*   By: clundber <clundber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:55:28 by clundber          #+#    #+#             */
-/*   Updated: 2023/12/04 14:30:58 by clundber         ###   ########.fr       */
+/*   Updated: 2023/12/05 11:28:57 by clundber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ void	*ft_calloc(size_t nmemb, size_t size);
 void	ft_bzero(void *str, size_t n);
 char	*get_next_line(int fd);
 int		linecheck(char *str);
-char	*ft_reader(char *temp, int fd);
-char 	*ft_rowmaker(char **temp, char *row);
+char	*ft_reader(char *temp, int fd, int *rd);
+char	*ft_rowmaker(char *temp, char *row);
 #endif

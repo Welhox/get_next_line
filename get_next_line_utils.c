@@ -6,7 +6,7 @@
 /*   By: clundber <clundber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:54:17 by clundber          #+#    #+#             */
-/*   Updated: 2023/12/04 11:26:15 by clundber         ###   ########.fr       */
+/*   Updated: 2023/12/05 14:30:35 by clundber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		len = ft_strlen(s) - start;
 	substr = (char *) malloc(sizeof(char) * (len + 1));
 	if (!substr)
-		return (NULL);
+		return (0);
 	while (s[start] && len > 0)
 	{
 		substr[i++] = s[start++];

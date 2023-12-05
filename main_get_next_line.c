@@ -6,7 +6,7 @@
 /*   By: clundber <clundber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 10:37:37 by clundber          #+#    #+#             */
-/*   Updated: 2023/12/04 14:24:46 by clundber         ###   ########.fr       */
+/*   Updated: 2023/12/05 14:43:58 by clundber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,31 @@ int	main(void)
 
 {
 	int	fd;
-	int	row;
+	int	i;
+	char *row;
 	//char *ptr;
 
-	row = 0;
+	row = NULL;
+	i = 0;
+	//fd = open("empty.txt", O_RDONLY);
+
 	fd = open("file_to_read.txt", O_RDONLY);
-	//fd = open("file_to_read.txt", O_RDONLY);
 	//printf ("%d\n", fd);
 	if (fd == -1)
 		printf("open failed");
 	//printf("%d\n", fd);
 	
-	while (row < 10)
+	while (i < 10)
 	{
-	printf("%s", get_next_line(fd));
+	row = get_next_line(fd);
+	printf("%s", row);
+	if (row)
+		free(row);
 	//printf("and now i want the next line :\n");
 	//printf("%s\n", get_next_line(fd));
 
 	//printf ("%d %s", row, ptr);
-	row++;
+	i++;
 	//free (ptr);
 	}
 	close (fd);
