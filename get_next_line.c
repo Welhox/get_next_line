@@ -6,7 +6,7 @@
 /*   By: clundber <clundber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:47:43 by clundber          #+#    #+#             */
-/*   Updated: 2023/12/05 15:31:30 by clundber         ###   ########.fr       */
+/*   Updated: 2023/12/07 19:45:34 by clundber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,6 @@
 #include <stdlib.h>
 #include <stdio.h> //delete
 #include "get_next_line.h"
-
-size_t	ft_strlen(const char *s)
-
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
-}
 
 int	linecheck(char *str)
 
@@ -40,64 +29,79 @@ int	linecheck(char *str)
 	return (0);
 }
 
-
-char	*ft_reader(char *temp, int fd, int *rd)
+char	*ft_reader(char *temp, int fd)
 {
 	char	*buffer;
 	char	*ptr;
+	int		rd;
 
 	ptr = NULL;
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
-		return(0);
-	*rd = read(fd, buffer, BUFFER_SIZE);
-	if (*rd <= 0)
+		return (ft_free(&temp));
+	rd = read(fd, buffer, BUFFER_SIZE);
+	if (rd == 0)
 	{
 		free (buffer);
-		if (*rd == 0 && temp)
-			return (temp);
-		free(temp);
-		return (0);
+		return (temp);
 	}
-	buffer[*rd] = '\0';
+	if (rd < 0)
+	{
+		free (buffer);
+		//free (temp);
+		return (ft_free(&temp));
+	}
+	buffer[rd] = '\0';
 	if (!temp)
 	{
- 		temp = ft_strdup(buffer);
+		temp = ft_substr(buffer, 0, rd);
 		free (buffer);
-	} 
- 	else if (temp && (linecheck(temp) == 0))
-	{ 
+	}
+	else
+	{
 		ptr = temp;
-		temp = ft_strjoin(temp, buffer);
+		temp = ft_strjoin(ptr, buffer);
 		free (buffer);
 		free (ptr);
 	}
-	return(temp);
+	if (!temp)
+		return(0);
+	if (linecheck(temp) == 0)
+		temp = ft_reader(temp, fd);
+	return (temp);
 }
 
 char	*ft_rowmaker(char *temp, char *row)
 
 {
-	char	*ptr;
 	int		i;
 
 	i = 0;
-	ptr = NULL;
 	if (!temp)
 		return (0);
-	while(temp[i])
+	while (temp[i])
 	{
-		if(temp[i] == '\n')
-		{	
-			row = ft_substr(temp, 0, i+1);
+		if (temp[i] == '\n')
+		{
+			row = ft_substr(temp, 0, i +1);
 			return (row);
 		}
-		else if (temp[i+1] == '\0')
-		{	
+		else if (temp[i +1] == '\0')
+		{
 			row = ft_strdup(temp);
-			return(row);
+			return (row);
 		}
 		i++;
+	}
+	return (0);
+}
+
+char	*ft_free(char **str)
+{
+	if (*str)
+	{
+		free(*str);
+		*str = NULL;
 	}
 	return (0);
 }
@@ -105,43 +109,38 @@ char	*ft_rowmaker(char *temp, char *row)
 char	*get_next_line(int fd)
 
 {
-	char 			*row;
-	int				check;
-	int				*rd;
-	static char		*temp;
-	char			*ptr;
+	char		*row;
+	static char	*temp;
+	char		*ptr;
 
 	row = NULL;
 	ptr = NULL;
-	check = 1;
-	rd = &check;
-	if (!fd || fd < 0 || fd >= 256 || BUFFER_SIZE <= 0)
-		return(0);
-	printf("11111\n");
-	while (check > 0 && (linecheck(temp) != 1))
-		if ((temp = ft_reader(temp, fd, rd)) == 0)
-		{
-			printf("33333\n");
-			if (temp)
-			//	free(temp);
-			return(0);
-		}
-	printf("222222\n");
-	if ((row = ft_rowmaker(temp, row)) == 0)
+	if (fd < 0 || fd >= 256 || BUFFER_SIZE <= 0)
 		return (0);
-	if (linecheck(row) == 1)
+	temp = ft_reader(temp, fd);
+	//{
+	//	return(0);
+		//printf("888");
+		//return(ft_free(&temp));
+	//}
+	//printf("456");
+   	if (!temp)
+		return (0);
+	//printf("789");	   
+	row = ft_rowmaker(temp, row);
+	if (!row)
+		return (0);
+	if (linecheck(row) == 1 && (ft_strlen(row) < ft_strlen(temp)))
 	{
 		ptr = temp;
 		temp = ft_substr(temp, ft_strlen(row), ft_strlen(temp) - ft_strlen(row));
-		free(ptr);
-		return(row);
-	}
-	else if (row)
-	{
-		free(temp);
+		ft_free(&ptr);
 		return (row);
 	}
-	return (0);
+	ft_free(&temp);
+/* 	free(temp);
+	temp = NULL; */
+	return (row);
 }
 /*
 	Allowed is read, malloc & free

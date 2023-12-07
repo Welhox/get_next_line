@@ -6,14 +6,15 @@
 /*   By: clundber <clundber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:54:17 by clundber          #+#    #+#             */
-/*   Updated: 2023/12/05 14:30:35 by clundber         ###   ########.fr       */
+/*   Updated: 2023/12/07 19:46:20 by clundber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdlib.h>
+#include <stdio.h> //delete
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup(char *s)
 
 {
 	int		len;
@@ -27,7 +28,9 @@ char	*ft_strdup(const char *s)
 	dupe = malloc ((len + 1) * sizeof(char));
 	if (!dupe)
 	{
+		s = NULL;
 		return (0);
+		//return(ft_free(&s));
 	}
 	while (len > 0)
 	{
@@ -39,42 +42,18 @@ char	*ft_strdup(const char *s)
 	return (dupe);
 }
 
-/*  void	*ft_calloc(size_t nmemb, size_t size)
+size_t	ft_strlen(const char *s)
 
 {
-	void	*ptr;
-	size_t	maxsize;
+	int	i;
 
-	maxsize = 0 - 1;
-	if (nmemb != 0 && size != 0)
-	{
-		if ((maxsize / nmemb) < size)
-			return (0);
-	}
-	if (nmemb * size > 2147483424)
-		return (0);
-	ptr = malloc(nmemb * size);
-	if (!ptr)
-		return (0);
-	ft_bzero(ptr, (nmemb * size));
-	return (ptr);
-} 
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	return (i);
+}
 
- void	ft_bzero(void *str, size_t n)
-
-{
-	unsigned char	*ptr;
-
-	ptr = str;
-	while (n > 0)
-	{
-		*ptr = '\0';
-		ptr++;
-		n--;
-	}
-}  */
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char *s, unsigned int start, size_t len)
 
 {
 	int		i;
@@ -89,7 +68,12 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		len = ft_strlen(s) - start;
 	substr = (char *) malloc(sizeof(char) * (len + 1));
 	if (!substr)
+	{
+		//ft_free(&s);
+		//printf("123");
 		return (0);
+		//return (ft_free(&s));
+	}
 	while (s[start] && len > 0)
 	{
 		substr[i++] = s[start++];
