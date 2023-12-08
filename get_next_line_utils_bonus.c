@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clundber <clundber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:54:17 by clundber          #+#    #+#             */
-/*   Updated: 2023/12/08 13:37:12 by clundber         ###   ########.fr       */
+/*   Updated: 2023/12/08 14:08:41 by clundber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 #include <stdlib.h>
 
 char	*ft_strdup(char *s)
@@ -49,7 +49,7 @@ char	*rd_check(char *buffer, char *temp, int rd)
 	return (temp);
 }
 
-size_t	ft_strlen(const char *s)
+size_t	ft_len(const char *s)
 
 {
 	int	i;
@@ -69,10 +69,10 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	i = 0;
 	if (!s)
 		return (0);
-	if (start > ft_strlen(s))
+	if (start > ft_len(s))
 		return (ft_strdup(""));
-	if (len > ft_strlen(s) || len > (ft_strlen(s) - start))
-		len = ft_strlen(s) - start;
+	if (len > ft_len(s) || len > (ft_len(s) - start))
+		len = ft_len(s) - start;
 	substr = (char *) malloc(sizeof(char) * (len + 1));
 	if (!substr)
 		return (0);
@@ -96,7 +96,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	j = 0;
 	if (!s1 || !s2)
 		return (0);
-	str = malloc ((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	str = malloc ((ft_len(s1) + ft_len(s2) + 1) * sizeof(char));
 	if (!str)
 		return (0);
 	while (s1[i])
