@@ -6,13 +6,12 @@
 /*   By: clundber <clundber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:54:17 by clundber          #+#    #+#             */
-/*   Updated: 2023/12/07 19:46:20 by clundber         ###   ########.fr       */
+/*   Updated: 2023/12/08 12:54:26 by clundber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdlib.h>
-#include <stdio.h> //delete
 
 char	*ft_strdup(char *s)
 
@@ -30,7 +29,6 @@ char	*ft_strdup(char *s)
 	{
 		s = NULL;
 		return (0);
-		//return(ft_free(&s));
 	}
 	while (len > 0)
 	{
@@ -40,6 +38,15 @@ char	*ft_strdup(char *s)
 	}
 	dupe[i] = '\0';
 	return (dupe);
+}
+
+char	*rd_check(char *buffer, char *temp, int rd)
+
+{
+	free (buffer);
+	if (rd < 0)
+		return (ft_free(&temp));
+	return (temp);
 }
 
 size_t	ft_strlen(const char *s)
@@ -68,12 +75,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 		len = ft_strlen(s) - start;
 	substr = (char *) malloc(sizeof(char) * (len + 1));
 	if (!substr)
-	{
-		//ft_free(&s);
-		//printf("123");
 		return (0);
-		//return (ft_free(&s));
-	}
 	while (s[start] && len > 0)
 	{
 		substr[i++] = s[start++];

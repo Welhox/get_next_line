@@ -6,7 +6,7 @@
 /*   By: clundber <clundber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:55:28 by clundber          #+#    #+#             */
-/*   Updated: 2023/12/07 18:53:34 by clundber         ###   ########.fr       */
+/*   Updated: 2023/12/08 12:49:10 by clundber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,6 @@ int		linecheck(char *str);
 char	*ft_reader(char *temp, int fd);
 char	*ft_rowmaker(char *temp, char *row);
 char	*ft_free(char **str);
+char	*rd_check(char *buffer, char *temp, int rd);
+
 #endif

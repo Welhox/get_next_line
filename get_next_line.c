@@ -6,13 +6,12 @@
 /*   By: clundber <clundber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:47:43 by clundber          #+#    #+#             */
-/*   Updated: 2023/12/07 19:45:34 by clundber         ###   ########.fr       */
+/*   Updated: 2023/12/08 12:52:39 by clundber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h> //delete
 #include "get_next_line.h"
 
 int	linecheck(char *str)
@@ -35,37 +34,24 @@ char	*ft_reader(char *temp, int fd)
 	char	*ptr;
 	int		rd;
 
-	ptr = NULL;
+	ptr = temp;
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (ft_free(&temp));
 	rd = read(fd, buffer, BUFFER_SIZE);
-	if (rd == 0)
-	{
-		free (buffer);
-		return (temp);
-	}
-	if (rd < 0)
-	{
-		free (buffer);
-		//free (temp);
-		return (ft_free(&temp));
-	}
+	if (rd <= 0)
+		return (rd_check(buffer, temp, rd));
 	buffer[rd] = '\0';
 	if (!temp)
-	{
 		temp = ft_substr(buffer, 0, rd);
-		free (buffer);
-	}
 	else
 	{
-		ptr = temp;
 		temp = ft_strjoin(ptr, buffer);
-		free (buffer);
 		free (ptr);
 	}
+	free (buffer);
 	if (!temp)
-		return(0);
+		return (0);
 	if (linecheck(temp) == 0)
 		temp = ft_reader(temp, fd);
 	return (temp);
@@ -84,11 +70,15 @@ char	*ft_rowmaker(char *temp, char *row)
 		if (temp[i] == '\n')
 		{
 			row = ft_substr(temp, 0, i +1);
+			if (!row)
+				return (0);
 			return (row);
 		}
 		else if (temp[i +1] == '\0')
 		{
 			row = ft_strdup(temp);
+			if (!row)
+				return (0);
 			return (row);
 		}
 		i++;
@@ -115,34 +105,21 @@ char	*get_next_line(int fd)
 
 	row = NULL;
 	ptr = NULL;
-	if (fd < 0 || fd >= 256 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
 	temp = ft_reader(temp, fd);
-	//{
-	//	return(0);
-		//printf("888");
-		//return(ft_free(&temp));
-	//}
-	//printf("456");
-   	if (!temp)
+	if (!temp)
 		return (0);
-	//printf("789");	   
 	row = ft_rowmaker(temp, row);
 	if (!row)
-		return (0);
+		return (ft_free(&temp));
 	if (linecheck(row) == 1 && (ft_strlen(row) < ft_strlen(temp)))
 	{
 		ptr = temp;
-		temp = ft_substr(temp, ft_strlen(row), ft_strlen(temp) - ft_strlen(row));
+		temp = ft_substr(ptr, ft_strlen(row), ft_strlen(temp) - ft_strlen(row));
 		ft_free(&ptr);
 		return (row);
 	}
 	ft_free(&temp);
-/* 	free(temp);
-	temp = NULL; */
 	return (row);
 }
-/*
-	Allowed is read, malloc & free
-	read syntax = int read(int fileDescriptor, void *buffer, size_t bytesToRead)
-*/
