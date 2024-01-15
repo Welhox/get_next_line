@@ -6,7 +6,7 @@
 /*   By: clundber <clundber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:47:43 by clundber          #+#    #+#             */
-/*   Updated: 2023/12/08 12:52:39 by clundber         ###   ########.fr       */
+/*   Updated: 2023/12/15 11:01:14 by clundber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ char	*get_next_line(int fd)
 	ptr = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
-	temp = ft_reader(temp, fd);
+	if (linecheck(temp) == 0)	
+		temp = ft_reader(temp, fd);
 	if (!temp)
 		return (0);
 	row = ft_rowmaker(temp, row);
